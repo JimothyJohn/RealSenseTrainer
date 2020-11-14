@@ -1,0 +1,21 @@
+version: "2.3"
+services:
+  rst:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: tail -F anything
+    runtime: nvidia
+    shm_size: "8gb"
+    ulimits:
+      memlock: -1
+      stack: 67108864
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:ro
+    devices:
+      - /dev/video0:/dev/video0
+      - /dev/video1:/dev/video1
+      - /dev/video2:/dev/video2
+    environment:
+      - DISPLAY=$DISPLAY
+      - NVIDIA_VISIBLE_DEVICES=all
